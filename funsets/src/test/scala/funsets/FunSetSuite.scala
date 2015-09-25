@@ -79,7 +79,7 @@ class FunSetSuite extends FunSuite {
     val s3 = singletonSet(3)
     val s4: Set = x => x >= 0 && x <= 10 
     val s5: Set = x => x >= 5 && x <= 15
-    val s6: Set = x => x >= 20 && x <= 30
+    val s6: Set = x => x >= -bound && x <= bound
   }
 
   /**
@@ -148,6 +148,37 @@ class FunSetSuite extends FunSuite {
       assert(!contains(fi, -1))
       assert(!contains(fi, 10))
       assert(!contains(fi, 16))
+    }
+  }
+  
+  test("forall") {
+    new TestSets {
+      assert(forall(s6, x => x < bound + 1))
+      assert(forall(s6, x => x > -bound - 1))
+      assert(forall(s6, x => x >= -bound && x <= bound))
+      assert(!forall(s6, x => x == 0))
+      assert(!forall(s6, x => x > bound))
+      assert(!forall(s6, x => x < -bound))
+    }
+  }
+  
+  test("exists") {
+    new TestSets {
+      assert(exists(s6, x => x == 0))
+      assert(exists(s6, x => x > -bound))
+      assert(exists(s6, x => x < bound))
+      assert(!exists(s6, x => x > bound))
+      assert(!exists(s6, x => x < -bound))
+      assert(!exists(s6, x => x == bound + 1))
+    }
+  }
+  
+  test("map") {
+    new TestSets {
+      val mapped = map(s6, x => x + 1)
+      assert(contains(mapped, bound + 1))
+      assert(contains(mapped, -bound + 1))
+      assert(!contains(mapped, -bound))
     }
   }
 }
