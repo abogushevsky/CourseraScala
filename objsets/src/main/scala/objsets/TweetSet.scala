@@ -35,14 +35,14 @@ class Tweet(val user: String, val text: String, val retweets: Int) {
  */
 abstract class TweetSet {
 
-  /*/**
+  /**
    * This method takes a predicate and returns a subset of all the elements
    * in the original set for which the predicate is true.
    *
    * Question: Can we implment this method here, or should it remain abstract
    * and be implemented in the subclasses?
    */
-    def filter(p: Tweet => Boolean): TweetSet = filterAcc(p, new Empty)*/
+    def filter(p: Tweet => Boolean): TweetSet
   
   /**
    * This is a helper method for `filter` that propagetes the accumulated tweets.
